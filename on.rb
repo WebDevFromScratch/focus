@@ -1,13 +1,6 @@
 require './hosts.rb'
 
-# TODO: make this configurable from an input file (json? yaml?)
-hosts = [
-  'facebook.com',
-  'www.facebook.com',
-  'instagram.com',
-  'www.instagram.com'
-]
-hosts_as_entries = hosts.map{ |host| ["0.0.0.0 #{host}", "::0 #{host}"] }.flatten
+hosts_as_entries = CONFIG['hosts'].map{ |host| ["0.0.0.0 #{host}", "::0 #{host}"] }.flatten
 focus_contents = ([START_STRING] + hosts_as_entries + [END_STRING]).join("\n")
 
 # TODO: make this safe, take care of potential crashes & interruptions during updates
