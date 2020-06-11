@@ -1,4 +1,6 @@
-# Make this file executable upon creation --> chmod +x focus.sh (assuming it's in the current directory, needs to be done once)
+# !/bin/bash
+
+# Make this file executable upon creation --> chmod u+x focus.sh (assuming it's in the current directory, needs to be done once)
 # Run it with the use of "sudo" --> sudo ./focus.sh (assuming it's in the current directory)
 # Optionally: make an alias out of it (TODO for myself right now, put it in a place that makes sense & make such alias)
 
@@ -6,12 +8,11 @@
 # and make this configurable via config.json
 BROWSER="Google Chrome"
 
-# not sure (yet) if I need to run both (off & on)
-# ruby off.rb
-ruby on.rb
-
 echo "-----------------"
 echo "Setting browser for focused work..."
+
+ruby on.rb
+
 # Flush system DNS cache
 dscacheutil -flushcache
 killall -HUP mDNSResponder
