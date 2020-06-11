@@ -1,10 +1,20 @@
+require 'tempfile'
+require 'fileutils'
 require './hosts.rb'
 
-# TODO: make this safe, take care of potential crashes & interruptions during updates
-contents = File.read(PATH_TO_FILE)
-regex = /^#{START_STRING}.+#{END_STRING}/m
+temp_file = Tempfile.new('hosts')
 
-if contents.match?(regex)
-  new_contents = contents.sub(regex, '').squeeze("\n")
-  File.open(PATH_TO_FILE, 'w') { |file| file.puts new_contents }
+begin
+  contents = File.read(PATH_TO_HOSTS_FILE)
+  regex = /^#{START_STRING}.+#{END_STRING}/m
+
+  if contents.match?(regex)
+    new_contents = contents.sub(regex, '').squeeze("\n")
+    temp_file.puts(new_contents)
+    temp_file.rewind
+    FileUtils.cp(temp_file.path, PATH_TO_HOSTS_FILE)
+  end
+ensure
+  temp_file.close
+  temp_file.unlink
 end
